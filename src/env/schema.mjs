@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 // @ts-check
 import { z } from "zod";
 
