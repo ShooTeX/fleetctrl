@@ -1,5 +1,6 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { Layer, Source } from "react-map-gl";
+import { hhBounds } from "../../../utils/map/hh-bounds";
 import { hhFeature } from "../../../utils/map/hh-feature";
 
 export const MapboxMap = () => {
@@ -7,10 +8,7 @@ export const MapboxMap = () => {
     <Map
       id="mainMap"
       initialViewState={{
-        bounds: [
-          [9.729_561, 53.762_799],
-          [10.338_187, 53.383_792],
-        ],
+        bounds: hhBounds,
       }}
       dragRotate={false}
       touchZoomRotate={false}

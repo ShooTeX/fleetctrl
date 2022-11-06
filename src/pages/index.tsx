@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { MapProvider } from "react-map-gl";
 import { MapboxMap } from "../components/map/MapboxMap";
+import { MapControls } from "../components/map/MapControls";
 
 // import { trpc } from "../utils/trpc";
 
@@ -17,6 +18,9 @@ const Home: NextPage = () => {
       </Head>
       <div className="h-screen w-screen">
         <MapProvider>
+          <div className="absolute right-4 top-4 z-50">
+            <MapControls />
+          </div>
           <MapboxMap />
         </MapProvider>
       </div>
