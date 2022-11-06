@@ -13,5 +13,19 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: { typescript: true, svgo: true },
+        },
+      ],
+    });
+
+    return config;
+  },
 };
 export default config;
