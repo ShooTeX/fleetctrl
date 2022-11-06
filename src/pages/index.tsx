@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { MapProvider } from "react-map-gl";
 import { MapboxMap } from "../components/map/MapboxMap";
 
 // import { trpc } from "../utils/trpc";
@@ -15,7 +16,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="h-screen w-screen">
-        <MapboxMap />
+        <MapProvider>
+          <MapboxMap />
+        </MapProvider>
       </div>
     </>
   );
