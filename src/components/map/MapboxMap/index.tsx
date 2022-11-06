@@ -4,28 +4,26 @@ import { useEffect, useRef, useState } from "react";
 
 mapboxgl.accessToken = "";
 export const MapboxMap = () => {
-  const [, setMap] = useState<mapboxgl.Map>();
+  const [map, setMap] = useState<mapboxgl.Map>();
   const mapNode = useRef(null);
 
   useEffect(() => {
-    const node = mapNode.current;
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    if (typeof window === "undefined" || node === null) return undefined;
+    if (mapNode.current && !map) {
+      const mapboxMap = new mapboxgl.Map({
+        container: mapNode.current,
+        accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
+        style: "mapbox://styles/mapbox/dark-v10",
+        center: [9.993_682, 53.551_086],
+        zoom: 9,
+      });
 
-    const mapboxMap = new mapboxgl.Map({
-      container: node,
-      accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [-74.5, 40],
-      zoom: 9,
-    });
-
-    setMap(mapboxMap);
+      setMap(mapboxMap);
+    }
 
     return () => {
-      mapboxMap.remove();
+      map?.remove();
     };
-  }, []);
+  }, [map]);
 
   return <div ref={mapNode} className="h-full w-full" />;
 };
