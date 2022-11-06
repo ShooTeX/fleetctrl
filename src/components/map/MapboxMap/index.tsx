@@ -1,34 +1,32 @@
-import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useEffect, useRef, useState } from "react";
-import { initMap } from "../../../utils/map/init-map";
+import Map, { Layer, Source } from "react-map-gl";
+import { hhFeature } from "../../../utils/map/hh-feature";
 
-mapboxgl.accessToken = "";
 export const MapboxMap = () => {
-  const [map, setMap] = useState<mapboxgl.Map>();
-  const mapNode = useRef(null);
-
-  useEffect(() => {
-    if (mapNode.current && !map) {
-      const mapboxMap = new mapboxgl.Map({
-        container: mapNode.current,
-        accessToken: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-        style: "mapbox://styles/mapbox/dark-v10",
-        // center: [9.993_682, 53.551_086],
-        // zoom: 9,
+  return (
+    <Map
+      initialViewState={{
         bounds: [
           [9.729_561, 53.762_799],
           [10.338_187, 53.383_792],
         ],
-      });
-      initMap(mapboxMap);
-      setMap(mapboxMap);
-    }
-
-    return () => {
-      map?.remove();
-    };
-  }, [map]);
-
-  return <div ref={mapNode} className="h-full w-full" />;
+      }}
+      dragRotate={false}
+      touchZoomRotate={false}
+      mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+      mapStyle="mapbox://styles/mapbox/dark-v10"
+    >
+      <Source id="hh" type="geojson" data={hhFeature}>
+        <Layer
+          id="hh-outline"
+          type="line"
+          layout={{ "line-join": "round", "line-cap": "round" }}
+          paint={{
+            "line-color": "#2a9d8f",
+            "line-width": 3,
+          }}
+        />
+      </Source>
+    </Map>
+  );
 };

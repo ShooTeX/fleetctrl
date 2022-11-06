@@ -35,6 +35,7 @@ specifiers:
   prisma: ^4.5.0
   react: 18.2.0
   react-dom: 18.2.0
+  react-map-gl: ^7.0.19
   superjson: 1.11.0
   tailwindcss: ^3.2.2
   typescript: ^4.8.4
@@ -51,6 +52,7 @@ dependencies:
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-map-gl: 7.0.19_6nlej2sgzao4w63iqaban4rulm
   superjson: 1.11.0
   zod: 3.19.1
 
@@ -454,7 +456,6 @@ packages:
 
   /@types/geojson/7946.0.10:
     resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
-    dev: true
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
@@ -468,7 +469,6 @@ packages:
     resolution: {integrity: sha512-pllZybHHZv2ZS3Hmlfy+j+m2YUjQNCEoqHJ/H+uQsdtsDCfyyfdg7hhiVCcZHlAtCGC13gTPzQpoPMpCell9Mg==}
     dependencies:
       '@types/geojson': 7946.0.10
-    dev: true
 
   /@types/node/18.11.9:
     resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
@@ -2621,6 +2621,17 @@ packages:
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
+
+  /react-map-gl/7.0.19_6nlej2sgzao4w63iqaban4rulm:
+    resolution: {integrity: sha512-s3E8aU6BursSDVwzQZbzdDzDRUX4kdfRqZODYvkdDbInr3RzaNdlbhJ5tojXKWOonsxV6wt+Acv9JCaOMKaf0A==}
+    peerDependencies:
+      mapbox-gl: '*'
+      react: '>=16.3.0'
+    dependencies:
+      '@types/mapbox-gl': 2.7.7
+      mapbox-gl: 2.10.0
+      react: 18.2.0
+    dev: false
 
   /react-ssr-prepass/1.5.0_react@18.2.0:
     resolution: {integrity: sha512-yFNHrlVEReVYKsLI5lF05tZoHveA5pGzjFbFJY/3pOqqjGOmMmqx83N4hIjN2n6E1AOa+eQEUxs3CgRnPmT0RQ==}
