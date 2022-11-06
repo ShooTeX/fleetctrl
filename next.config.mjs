@@ -20,7 +20,19 @@ const config = {
       use: [
         {
           loader: "@svgr/webpack",
-          options: { typescript: true, svgo: true },
+          options: {
+            typescript: true,
+            svgo: true,
+            svgoConfig: {
+              plugins: [
+                {
+                  name: "preset-default",
+                  params: { overrides: { removeViewBox: false } },
+                },
+              ],
+            },
+            prettier: true,
+          },
         },
       ],
     });

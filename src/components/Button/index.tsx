@@ -17,7 +17,7 @@ export const Button = ({ children, icon, ...rest }: ButtonProperties) => {
       className="flex items-center space-x-2 rounded-lg bg-zinc-800 px-5 py-1 font-medium uppercase text-slate-50 transition-all ease-in-out hover:shadow-lg"
       {...rest}
     >
-      {!!icon && <FontAwesomeIcon icon={icon} className="text-zinc-400" />}
+      {!!icon && <FontAwesomeIcon icon={icon} className="h-5 text-zinc-400" />}
       <div>{children}</div>
     </button>
   );
