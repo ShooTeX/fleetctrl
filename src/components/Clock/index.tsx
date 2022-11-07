@@ -1,5 +1,5 @@
 import { Roboto_Mono } from "@next/font/google";
-import format from "date-fns/esm/format";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 const mono = Roboto_Mono({ subsets: ["latin"] });
@@ -17,7 +17,7 @@ export const Clock = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  });
   return (
     <div className="flex flex-col items-end text-white">
       <div className="text-5xl font-bold text-zinc-300">
