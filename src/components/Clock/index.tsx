@@ -20,7 +20,7 @@ export const Clock = () => {
   }, []);
   return (
     <div className="flex flex-col items-end text-white">
-      <div className="text-5xl font-bold">
+      <div className="text-5xl font-bold text-zinc-300">
         <span className={mono.className}>{timeFormatted}</span>
       </div>
       <div className="uppercase text-zinc-400">{dateFormatted}</div>
