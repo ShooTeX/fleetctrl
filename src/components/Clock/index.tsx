@@ -7,7 +7,7 @@ const mono = Roboto_Mono({ subsets: ["latin"] });
 export const Clock = () => {
   const [date, setDate] = useState(new Date());
   const timeFormatted = format(date, "HH:mm");
-  const dateFormatted = format(date, "eeee, eo MMMM");
+  const dateFormatted = format(date, "eeee, do MMMM");
 
   useEffect(() => {
     const timer = setTimeout(() => {
