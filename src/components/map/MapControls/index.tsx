@@ -9,7 +9,7 @@ export const MapControls = () => {
   const onRecenter = () => {
     mainMap?.fitBounds(hhBounds);
   };
-
+  
   return (
     <div>
       <Button onClick={onRecenter} icon={faLocationCrosshairs}>
