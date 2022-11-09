@@ -1,6 +1,6 @@
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { useMap } from "react-map-gl";
-import { hhBounds } from "../../../utils/map/hh-bounds";
+import { hhBounds } from "../../../map/hh-bounds";
 import { Button } from "../../Button";
 
 export const MapControls = () => {

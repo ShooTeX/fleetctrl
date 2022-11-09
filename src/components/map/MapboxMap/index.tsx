@@ -3,8 +3,8 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect } from "react";
 import Map, { Layer, Source, useMap } from "react-map-gl";
-import { hhBounds } from "../../../utils/map/hh-bounds";
-import { hhFeature } from "../../../utils/map/hh-feature";
+import { hhBounds } from "../../../map/hh-bounds";
+import { hhFeature } from "../../../map/hh-feature";
 import { trpc } from "../../../utils/trpc";
 
 export const MapboxMap = () => {
