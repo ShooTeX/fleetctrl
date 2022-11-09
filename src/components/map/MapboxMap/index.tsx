@@ -3,7 +3,9 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect } from "react";
 import Map, { Layer, Marker, Source, useMap } from "react-map-gl";
-import { MdFlag, MdPersonPin, MdPersonPinCircle } from "react-icons/md";
+import { MdFlag, MdPersonPinCircle } from "react-icons/md";
+import { FaCircle } from "react-icons/fa";
+import { TiLocationArrow } from "react-icons/ti";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { trpc } from "../../../utils/trpc";
@@ -84,6 +86,16 @@ export const MapboxMap = () => {
             anchor="bottom-left"
           >
             <MdFlag className="text-3xl text-white" />
+          </Marker>
+          <Marker
+            latitude={route.coordinates?.at(route.coordinates.length / 2)?.[1]}
+            longitude={route.coordinates?.at(route.coordinates.length / 2)?.[0]}
+            anchor="center"
+          >
+            <div className="relative">
+              <TiLocationArrow className="absolute inset-0 m-auto rotate-45 text-2xl text-slate-100" />
+              <FaCircle className="text-3xl text-slate-500" />
+            </div>
           </Marker>
         </>
       )}
