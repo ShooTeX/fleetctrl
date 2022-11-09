@@ -1,5 +1,5 @@
-import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { useMap } from "react-map-gl";
+import { BiCurrentLocation } from "react-icons/bi";
 import { hhBounds } from "../../../map/hh-bounds";
 import { Button } from "../../Button";
 
@@ -9,10 +9,10 @@ export const MapControls = () => {
   const onRecenter = () => {
     mainMap?.fitBounds(hhBounds);
   };
-  
+
   return (
     <div>
-      <Button onClick={onRecenter} icon={faLocationCrosshairs}>
+      <Button onClick={onRecenter} Icon={BiCurrentLocation}>
         recenter
       </Button>
     </div>
