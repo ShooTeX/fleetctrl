@@ -2,7 +2,8 @@ import { toGeoJSON } from "@mapbox/polyline";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect } from "react";
-import Map, { Layer, Source, useMap } from "react-map-gl";
+import Map, { Layer, Marker, Source, useMap } from "react-map-gl";
+import { MdFlag, MdPersonPin, MdPersonPinCircle } from "react-icons/md";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { trpc } from "../../../utils/trpc";
@@ -58,17 +59,33 @@ export const MapboxMap = () => {
         />
       </Source>
       {!!route && (
-        <Source id="route" type="geojson" data={route}>
-          <Layer
-            id="route"
-            type="line"
-            layout={{ "line-join": "round", "line-cap": "round" }}
-            paint={{
-              "line-color": "#FFF",
-              "line-width": 5,
-            }}
-          />
-        </Source>
+        <>
+          <Source id="route" type="geojson" data={route}>
+            <Layer
+              id="route"
+              type="line"
+              layout={{ "line-join": "round", "line-cap": "round" }}
+              paint={{
+                "line-color": "#FFF",
+                "line-width": 5,
+              }}
+            />
+          </Source>
+          <Marker
+            latitude={route.coordinates?.[0]?.[1]}
+            longitude={route.coordinates?.[0]?.[0]}
+            anchor="bottom"
+          >
+            <MdPersonPinCircle className="text-3xl text-white" />
+          </Marker>
+          <Marker
+            latitude={route.coordinates?.at(-1)?.[1]}
+            longitude={route.coordinates?.at(-1)?.[0]}
+            anchor="bottom-left"
+          >
+            <MdFlag className="text-3xl text-white" />
+          </Marker>
+        </>
       )}
     </Map>
   );
