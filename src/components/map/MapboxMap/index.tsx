@@ -9,6 +9,7 @@ import { TiLocationArrow } from "react-icons/ti";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { trpc } from "../../../utils/trpc";
+import { calcBearing } from "../../../utils/calc-bearing";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
@@ -81,8 +82,8 @@ export const MapboxMap = () => {
             <MdPersonPinCircle className="text-3xl text-white" />
           </Marker>
           <Marker
-            latitude={route.coordinates?.at(-1)?.[1]}
             longitude={route.coordinates?.at(-1)?.[0]}
+            latitude={route.coordinates?.at(-1)?.[1]}
             anchor="bottom-left"
           >
             <MdFlag className="text-3xl text-white" />
@@ -91,9 +92,21 @@ export const MapboxMap = () => {
             latitude={route.coordinates?.at(route.coordinates.length / 2)?.[1]}
             longitude={route.coordinates?.at(route.coordinates.length / 2)?.[0]}
             anchor="center"
+            rotation={calcBearing({
+              start: [
+                route.coordinates?.at(route.coordinates.length / 2 - 1)?.[1] ??
+                  0,
+                route.coordinates?.at(route.coordinates.length / 2 - 1)?.[0] ??
+                  0,
+              ],
+              destination: [
+                route.coordinates?.at(route.coordinates.length / 2)?.[1] ?? 0,
+                route.coordinates?.at(route.coordinates.length / 2)?.[0] ?? 0,
+              ],
+            })}
           >
             <div className="relative">
-              <TiLocationArrow className="absolute inset-0 m-auto rotate-45 text-2xl text-slate-100" />
+              <TiLocationArrow className="absolute inset-0 m-auto -rotate-45 text-2xl text-slate-100" />
               <FaCircle className="text-3xl text-slate-500" />
             </div>
           </Marker>
