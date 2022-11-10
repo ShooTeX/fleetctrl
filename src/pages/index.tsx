@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Header } from "../components/Header";
 import { MapboxMap } from "../components/map/MapboxMap";
 import { MapControls } from "../components/map/MapControls";
+import { NavSideBar } from "../components/NavSideBar";
 
 // import { trpc } from "../utils/trpc";
 
@@ -18,11 +19,14 @@ const Home: NextPage = () => {
       </Head>
       <div className="flex h-screen w-screen flex-col">
         <Header />
-        <div className="relative h-full w-full">
-          <div className="absolute right-4 top-4 z-50">
-            <MapControls />
+        <div className="flex h-full w-full bg-zinc-800">
+          <NavSideBar />
+          <div className="relative flex-1 overflow-hidden rounded-tl-xl">
+            <div className="absolute right-4 top-4 z-50">
+              <MapControls />
+            </div>
+            <MapboxMap />
           </div>
-          <MapboxMap />
         </div>
       </div>
     </>
