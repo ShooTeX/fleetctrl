@@ -1,9 +1,11 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useCallback, useState } from "react";
+import { IoMdArrowRoundDown } from "react-icons/io";
 import type { LngLat } from "react-map-gl";
 import Map, { Marker, Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
+import { Popup } from "../Popup";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
@@ -64,13 +66,22 @@ export const MapboxMap = () => {
         />
       </Source>
       {showPopup && (
-        <Marker
-          longitude={showPopup.lng}
-          latitude={showPopup.lat}
-          anchor="center"
-        >
-          <span className="text-5xl text-white">Hello</span>
-        </Marker>
+        <>
+          <Marker
+            longitude={showPopup.lng}
+            latitude={showPopup.lat}
+            anchor="bottom"
+          >
+            <IoMdArrowRoundDown className="animate-bounce text-3xl leading-none text-white" />
+          </Marker>
+          <Marker
+            longitude={showPopup.lng}
+            latitude={showPopup.lat}
+            anchor="top-left"
+          >
+            <Popup />
+          </Marker>
+        </>
       )}
       {/* !!route && (
         <>
