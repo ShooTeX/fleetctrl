@@ -1,10 +1,13 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import Map, { Layer, Source } from "react-map-gl";
+import { useCallback, useState } from "react";
+import type { LngLat } from "react-map-gl";
+import Map, { Marker, Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 
 export const MapboxMap = () => {
-  // const { mainMap } = useMap();
+  const { mainMap } = useMap();
+  const [showPopup, setShowPopup] = useState<LngLat | false>(false);
   // const { data } = trpc.example.getDirections.useQuery({
   //   waypoints: [
   //     { coordinates: [9.977_83, 53.549_121] },
@@ -32,6 +35,12 @@ export const MapboxMap = () => {
   //   });
   // }, [mainMap, route]);
 
+  const onMapLoad = useCallback(() => {
+    mainMap?.on("click", (event) => {
+      setShowPopup(event.lngLat);
+    });
+  }, [mainMap]);
+
   return (
     <Map
       id="mainMap"
@@ -39,6 +48,7 @@ export const MapboxMap = () => {
         bounds: hhBounds,
       }}
       dragRotate={false}
+      onLoad={onMapLoad}
       touchZoomRotate={false}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/mapbox/dark-v10"
@@ -53,6 +63,15 @@ export const MapboxMap = () => {
           }}
         />
       </Source>
+      {showPopup && (
+        <Marker
+          longitude={showPopup.lng}
+          latitude={showPopup.lat}
+          anchor="center"
+        >
+          <span className="text-5xl text-white">Hello</span>
+        </Marker>
+      )}
       {/* !!route && (
         <>
           <Source id="route" type="geojson" data={route}>
