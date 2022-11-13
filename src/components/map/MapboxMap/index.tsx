@@ -1,44 +1,36 @@
-import { toGeoJSON } from "@mapbox/polyline";
-import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useEffect } from "react";
-import Map, { Layer, Marker, Source, useMap } from "react-map-gl";
-import { MdFlag, MdPersonPinCircle } from "react-icons/md";
-import { FaCircle } from "react-icons/fa";
-import { TiLocationArrow } from "react-icons/ti";
+import Map, { Layer, Source } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
-import { trpc } from "../../../utils/trpc";
-import { calcBearing } from "../../../utils/calc-bearing";
 
 export const MapboxMap = () => {
-  const { mainMap } = useMap();
-  const { data } = trpc.example.getDirections.useQuery({
-    waypoints: [
-      { coordinates: [9.977_83, 53.549_121] },
-      { coordinates: [9.997_255, 53.547_294] },
-    ],
-  });
-  const route =
-    !!data?.routes[0]?.geometry && toGeoJSON(data.routes[0].geometry);
+  // const { mainMap } = useMap();
+  // const { data } = trpc.example.getDirections.useQuery({
+  //   waypoints: [
+  //     { coordinates: [9.977_83, 53.549_121] },
+  //     { coordinates: [9.997_255, 53.547_294] },
+  //   ],
+  // });
+  // const route =
+  //   !!data?.routes[0]?.geometry && toGeoJSON(data.routes[0].geometry);
 
-  useEffect(() => {
-    mainMap?.on("click", "route", () => {
-      if (route) {
-        const { coordinates } = route;
-        if (coordinates[0]) {
-          const bounds = new mapboxgl.LngLatBounds(
-            coordinates[0] as [number, number],
-            coordinates[0] as [number, number]
-          );
-
-          coordinates.map((coord) => bounds.extend(coord as [number, number]));
-
-          mainMap?.fitBounds(bounds, { padding: 20 });
-        }
-      }
-    });
-  }, [mainMap, route]);
+  // useEffect(() => {
+  //   mainMap?.on("click", "route", () => {
+  //     if (route) {
+  //       const { coordinates } = route;
+  //       if (coordinates[0]) {
+  //         const bounds = new mapboxgl.LngLatBounds(
+  //           coordinates[0] as [number, number],
+  //           coordinates[0] as [number, number]
+  //         );
+  //
+  //         coordinates.map((coord) => bounds.extend(coord as [number, number]));
+  //
+  //         mainMap?.fitBounds(bounds, { padding: 20 });
+  //       }
+  //     }
+  //   });
+  // }, [mainMap, route]);
 
   return (
     <Map
@@ -61,7 +53,7 @@ export const MapboxMap = () => {
           }}
         />
       </Source>
-      {!!route && (
+      {/* !!route && (
         <>
           <Source id="route" type="geojson" data={route}>
             <Layer
@@ -111,7 +103,7 @@ export const MapboxMap = () => {
             </div>
           </Marker>
         </>
-      )}
+      ) */}
     </Map>
   );
 };
