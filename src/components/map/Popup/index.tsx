@@ -9,6 +9,7 @@ type PopupProperties = {
   position: LngLat;
 };
 
+// TODO: add closing button / header
 export const Popup = ({ position, buttons }: PopupProperties) => (
   <>
     <Marker longitude={position.lng} latitude={position.lat} anchor="bottom">
