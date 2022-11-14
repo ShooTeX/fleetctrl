@@ -25,7 +25,14 @@ const Home: NextPage = () => {
           <NavSideBar />
           <div className="relative flex-1 overflow-hidden rounded-tl-xl">
             <div className="pointer-events-none absolute inset-4 z-50">
-              <Toaster containerStyle={{ position: "relative", inset: 0 }} />
+              <Toaster
+                containerStyle={{
+                  position: "relative",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
             </div>
             <div className="absolute right-4 top-4 z-50">
               <MapControls />
