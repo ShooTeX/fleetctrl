@@ -20,7 +20,9 @@ export const Snackbar = ({
   return (
     <div
       className={clsx(
-        "flex divide-x-2 rounded-md bg-emerald-600 py-3 text-white drop-shadow-lg",
+        "flex cursor-default divide-x-2",
+        "rounded-md bg-emerald-600",
+        "py-3 text-white drop-shadow-lg",
         className
       )}
     >
