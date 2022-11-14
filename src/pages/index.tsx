@@ -5,6 +5,7 @@ import { Header } from "../components/Header";
 import { MapboxMap } from "../components/map/MapboxMap";
 import { MapControls } from "../components/map/MapControls";
 import { NavSideBar } from "../components/NavSideBar";
+import { Snackbar } from "../components/Snackbar";
 
 // import { trpc } from "../utils/trpc";
 
@@ -24,15 +25,13 @@ const Home: NextPage = () => {
           <NavSideBar />
           <div className="relative flex-1 overflow-hidden rounded-tl-xl">
             <div className="absolute inset-x-0 top-4 z-50 m-auto flex justify-center">
-              <div className="flex divide-x-2 rounded-md bg-emerald-600 py-3 text-white drop-shadow-lg">
-                <div className="flex items-center space-x-2 px-5">
-                  <MdOutlineAddLocation className="text-lg text-emerald-100" />
-                  <span>Set a destination</span>
-                </div>
-                <button type="button" className="px-3 font-bold">
-                  cancel
-                </button>
-              </div>
+              <Snackbar
+                Icon={MdOutlineAddLocation}
+                action={{ title: "Abort", onClick: console.log }}
+                className="animate-pulse hover:animate-none"
+              >
+                Add a destination
+              </Snackbar>
             </div>
             <div className="absolute right-4 top-4 z-50">
               <MapControls />
