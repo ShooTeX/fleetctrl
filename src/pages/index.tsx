@@ -12,6 +12,7 @@ import { Snackbar } from "../components/Snackbar";
 const Home: NextPage = () => {
   // const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
+  // TODO: add custom hook to show snackbar depending on a map mode
   return (
     <>
       <Head>
@@ -25,7 +26,6 @@ const Home: NextPage = () => {
           <NavSideBar />
           <div className="relative flex-1 overflow-hidden rounded-tl-xl">
             <div className="absolute inset-x-0 top-4 z-50 m-auto flex justify-center">
-              {/* TODO: add custom hook to show this depending on a map mode */}
               <Snackbar
                 Icon={MdOutlineAddLocation}
                 action={{ title: "Abort", onClick: console.log }}
