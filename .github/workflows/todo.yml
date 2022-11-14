@@ -4,8 +4,8 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4"
+      - uses: "actions/checkout@v3"
       - name: "TODO to Issue"
-        uses: "alstr/todo-to-issue-action@latest"
+        uses: "alstr/todo-to-issue-action@v4"
         with:
           AUTO_ASSIGN: true
