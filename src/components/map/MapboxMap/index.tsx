@@ -1,5 +1,6 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useCallback, useState } from "react";
+import { FaUserPlus } from "react-icons/fa";
 import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
@@ -64,7 +65,12 @@ export const MapboxMap = () => {
           }}
         />
       </Source>
-      {showPopup && <Popup position={showPopup} />}
+      {showPopup && (
+        <Popup
+          position={showPopup}
+          buttons={[{ title: "hello", onClick: console.log, Icon: FaUserPlus }]}
+        />
+      )}
       {/* !!route && (
         <>
           <Source id="route" type="geojson" data={route}>
