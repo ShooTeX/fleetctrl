@@ -39,6 +39,7 @@ export const MapboxMap = () => {
 
   const onMapLoad = useCallback(() => {
     mainMap?.on("click", (event) => {
+      if (event.originalEvent.target !== mainMap.getCanvas()) return;
       setShowPopup(event.lngLat);
     });
   }, [mainMap]);
