@@ -1,6 +1,6 @@
 import { AiFillCar } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
-import { HiCog6Tooth } from "react-icons/hi2";
+import { FaCog } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 
 export const NavSideBar = () => {
@@ -12,7 +12,7 @@ export const NavSideBar = () => {
       </div>
       <div className="space-y-5">
         <MdAccountCircle />
-        <HiCog6Tooth />
+        <FaCog />
       </div>
       <div />
     </div>
