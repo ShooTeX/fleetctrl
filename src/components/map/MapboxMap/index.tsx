@@ -1,41 +1,25 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 import { FaUserPlus } from "react-icons/fa";
+import { MdOutlineAddLocation } from "react-icons/md";
 import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
+import { Snackbar } from "../../Snackbar";
 import { Popup } from "../Popup";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
   const [showPopup, setShowPopup] = useState<LngLat | false>(false);
-  // const { data } = trpc.example.getDirections.useQuery({
-  //   waypoints: [
-  //     { coordinates: [9.977_83, 53.549_121] },
-  //     { coordinates: [9.997_255, 53.547_294] },
-  //   ],
-  // });
-  // const route =
-  //   !!data?.routes[0]?.geometry && toGeoJSON(data.routes[0].geometry);
 
-  // useEffect(() => {
-  //   mainMap?.on("click", "route", () => {
-  //     if (route) {
-  //       const { coordinates } = route;
-  //       if (coordinates[0]) {
-  //         const bounds = new mapboxgl.LngLatBounds(
-  //           coordinates[0] as [number, number],
-  //           coordinates[0] as [number, number]
-  //         );
-  //
-  //         coordinates.map((coord) => bounds.extend(coord as [number, number]));
-  //
-  //         mainMap?.fitBounds(bounds, { padding: 20 });
-  //       }
-  //     }
-  //   });
-  // }, [mainMap, route]);
+  const startDestinationProcess = () => {
+    toast.custom(<Snackbar Icon={MdOutlineAddLocation}>snackbar</Snackbar>, {
+      duration: Number.POSITIVE_INFINITY,
+      position: "top-center",
+    });
+  };
 
   const onMapLoad = useCallback(() => {
     mainMap?.on("click", (event) => {
@@ -69,7 +53,13 @@ export const MapboxMap = () => {
       {showPopup && (
         <Popup
           position={showPopup}
-          buttons={[{ title: "hello", onClick: console.log, Icon: FaUserPlus }]}
+          buttons={[
+            {
+              title: "hello",
+              onClick: startDestinationProcess,
+              Icon: FaUserPlus,
+            },
+          ]}
         />
       )}
       {/* !!route && (
