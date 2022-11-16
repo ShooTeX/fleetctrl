@@ -12,6 +12,7 @@ specifiers:
   '@trpc/next': 10.0.0-rc.4
   '@trpc/react-query': 10.0.0-rc.4
   '@trpc/server': 10.0.0-rc.4
+  '@turf/helpers': ^6.5.0
   '@types/mapbox-gl': ^2.7.7
   '@types/mapbox__mapbox-sdk': ^0.13.4
   '@types/mapbox__polyline': ^1.0.2
@@ -64,6 +65,7 @@ dependencies:
   '@trpc/next': 10.0.0-rc.4_ih5l37ngm6hwt26dhyhct4h4zm
   '@trpc/react-query': 10.0.0-rc.4_q4tuzh3he65ksfssc657jltvdy
   '@trpc/server': 10.0.0-rc.4
+  '@turf/helpers': 6.5.0
   clsx: 1.2.1
   date-fns: 2.29.3
   mapbox-gl: 2.10.0
@@ -2192,6 +2194,10 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
     dev: true
+
+  /@turf/helpers/6.5.0:
+    resolution: {integrity: sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==}
+    dev: false
 
   /@types/cacheable-request/6.0.2:
     resolution: {integrity: sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==}
