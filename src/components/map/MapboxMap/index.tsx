@@ -1,8 +1,7 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
-import { FaUserPlus } from "react-icons/fa";
-import { MdOutlineAddLocation } from "react-icons/md";
+import { FaFlag, FaRoute } from "react-icons/fa";
 import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
@@ -13,13 +12,30 @@ import { Popup } from "../Popup";
 export const MapboxMap = () => {
   const { mainMap } = useMap();
   const [showPopup, setShowPopup] = useState<LngLat | false>(false);
+  const [customRouteStart, setCustomRouteStart] = useState<LngLat | false>(
+    false
+  );
 
-  useEffect(() => {
+  const createCustomRoute = () => {
+    if (showPopup) {
+      setCustomRouteStart(showPopup);
+    }
+    setShowPopup(false);
+
     toast.custom(
       (t) => (
         <Actionbar
-          Icon={MdOutlineAddLocation}
-          action={{ title: "cancel", onClick: () => toast.dismiss(t.id) }}
+          Icon={FaFlag}
+          action={{
+            title: "cancel",
+            onClick: () => {
+              setCustomRouteStart(false);
+              toast.error("Cancelled custom route creation", {
+                position: "top-left",
+              });
+              toast.dismiss(t.id);
+            },
+          }}
         >
           Set a destination point
         </Actionbar>
@@ -30,14 +46,20 @@ export const MapboxMap = () => {
         id: "processToast",
       }
     );
-  }, []);
+  };
 
-  const onMapLoad = useCallback(() => {
-    mainMap?.on("click", (event) => {
-      if (event.originalEvent.target !== mainMap.getCanvas()) return;
+  const handleMouseClick = useCallback(
+    (event: mapboxgl.MapLayerMouseEvent) => {
+      if (
+        event.originalEvent.target !== mainMap?.getCanvas() ||
+        customRouteStart
+      ) {
+        return;
+      }
       setShowPopup(event.lngLat);
-    });
-  }, [mainMap]);
+    },
+    [customRouteStart, mainMap]
+  );
 
   return (
     <Map
@@ -46,7 +68,7 @@ export const MapboxMap = () => {
         bounds: hhBounds,
       }}
       dragRotate={false}
-      onLoad={onMapLoad}
+      onClick={handleMouseClick}
       touchZoomRotate={false}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/mapbox/dark-v10"
@@ -66,9 +88,9 @@ export const MapboxMap = () => {
           position={showPopup}
           buttons={[
             {
-              title: "hello",
-              onClick: console.log,
-              Icon: FaUserPlus,
+              title: "Create route",
+              onClick: createCustomRoute,
+              Icon: FaRoute,
             },
           ]}
         />
