@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import type { IconType } from "react-icons";
+import { IoClose } from "react-icons/io5";
 
 type SnackbarProperties = {
   Icon?: IconType;
@@ -11,7 +12,7 @@ type SnackbarProperties = {
   };
 };
 
-export const Snackbar = ({
+export const Actionbar = ({
   Icon,
   className,
   children,
@@ -20,23 +21,23 @@ export const Snackbar = ({
   return (
     <div
       className={clsx(
-        "flex cursor-default divide-x-2",
-        "rounded-md bg-emerald-600",
-        "py-3 text-white drop-shadow-lg",
+        "flex cursor-default",
+        "rounded-3xl bg-zinc-800",
+        "py-2 text-white drop-shadow-xl",
         className
       )}
     >
       <div className="flex items-center space-x-2 px-5">
-        {!!Icon && <Icon className="text-lg text-emerald-100" />}
-        <span>{children}</span>
+        {!!Icon && <Icon className="text-lg text-zinc-400" />}
+        <span className="leading-none">{children}</span>
       </div>
       {!!action && (
         <button
           type="button"
           onClick={action.onClick}
-          className="px-3 font-bold"
+          className="flex items-center pr-3 text-red-400"
         >
-          {action.title}
+          <IoClose />
         </button>
       )}
     </div>
