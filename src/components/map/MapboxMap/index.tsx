@@ -1,5 +1,5 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaUserPlus } from "react-icons/fa";
 import { MdOutlineAddLocation } from "react-icons/md";
@@ -7,19 +7,30 @@ import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
-import { Snackbar } from "../../Snackbar";
+import { Actionbar } from "../../Actionbar";
 import { Popup } from "../Popup";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
   const [showPopup, setShowPopup] = useState<LngLat | false>(false);
 
-  const startDestinationProcess = () => {
-    toast.custom(<Snackbar Icon={MdOutlineAddLocation}>snackbar</Snackbar>, {
-      duration: Number.POSITIVE_INFINITY,
-      position: "top-center",
-    });
-  };
+  useEffect(() => {
+    toast.custom(
+      (t) => (
+        <Actionbar
+          Icon={MdOutlineAddLocation}
+          action={{ title: "cancel", onClick: () => toast.dismiss(t.id) }}
+        >
+          Set a destination point
+        </Actionbar>
+      ),
+      {
+        duration: Number.POSITIVE_INFINITY,
+        position: "top-center",
+        id: "processToast",
+      }
+    );
+  }, []);
 
   const onMapLoad = useCallback(() => {
     mainMap?.on("click", (event) => {
@@ -56,7 +67,7 @@ export const MapboxMap = () => {
           buttons={[
             {
               title: "hello",
-              onClick: startDestinationProcess,
+              onClick: console.log,
               Icon: FaUserPlus,
             },
           ]}
