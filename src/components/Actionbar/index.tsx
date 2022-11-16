@@ -35,7 +35,7 @@ export const Actionbar = ({
         <button
           type="button"
           onClick={action.onClick}
-          className="flex items-center pr-3 text-red-400"
+          className="flex items-center pr-3 text-xl text-red-400"
         >
           <IoClose />
         </button>

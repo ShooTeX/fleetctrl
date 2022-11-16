@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { FaFlag, FaRoute } from "react-icons/fa";
 import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
+import { lineString } from "@turf/helpers";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { Actionbar } from "../../Actionbar";
@@ -15,6 +16,22 @@ export const MapboxMap = () => {
   const [customRouteStart, setCustomRouteStart] = useState<LngLat | false>(
     false
   );
+  const [customRouteEnd, setCustomRouteEnd] = useState<LngLat | false>(false);
+
+  const customRoutePreview =
+    customRouteEnd &&
+    customRouteStart &&
+    lineString([customRouteStart.toArray(), customRouteEnd.toArray()], {
+      id: "customRoutePreview",
+    });
+
+  const cancelCustomRoute = () => {
+    setCustomRouteStart(false);
+    setCustomRouteEnd(false);
+    toast.error("Cancelled custom route creation", {
+      position: "top-left",
+    });
+  };
 
   const createCustomRoute = () => {
     if (showPopup) {
@@ -29,10 +46,7 @@ export const MapboxMap = () => {
           action={{
             title: "cancel",
             onClick: () => {
-              setCustomRouteStart(false);
-              toast.error("Cancelled custom route creation", {
-                position: "top-left",
-              });
+              cancelCustomRoute();
               toast.dismiss(t.id);
             },
           }}
@@ -61,6 +75,19 @@ export const MapboxMap = () => {
     [customRouteStart, mainMap]
   );
 
+  const handleMouseMove = useCallback(
+    (event: mapboxgl.MapLayerMouseEvent) => {
+      if (
+        event.originalEvent.target !== mainMap?.getCanvas() ||
+        !customRouteStart
+      ) {
+        return;
+      }
+      setCustomRouteEnd(event.lngLat);
+    },
+    [customRouteStart, mainMap]
+  );
+
   return (
     <Map
       id="mainMap"
@@ -69,6 +96,7 @@ export const MapboxMap = () => {
       }}
       dragRotate={false}
       onClick={handleMouseClick}
+      onMouseMove={handleMouseMove}
       touchZoomRotate={false}
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
       mapStyle="mapbox://styles/mapbox/dark-v10"
@@ -94,6 +122,19 @@ export const MapboxMap = () => {
             },
           ]}
         />
+      )}
+      {customRoutePreview && (
+        <Source type="geojson" data={customRoutePreview}>
+          <Layer
+            id="route"
+            type="line"
+            layout={{ "line-join": "round", "line-cap": "round" }}
+            paint={{
+              "line-color": "#FFF",
+              "line-width": 2,
+            }}
+          />
+        </Source>
       )}
       {/* !!route && (
         <>
