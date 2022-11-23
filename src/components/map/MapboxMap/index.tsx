@@ -17,6 +17,7 @@ export const MapboxMap = () => {
     false
   );
   const [customRouteEnd, setCustomRouteEnd] = useState<LngLat | false>(false);
+  const [customRoute, setCustomRoute] = useState<LngLat[] | false>(false);
 
   const customRoutePreview =
     customRouteEnd &&
@@ -25,12 +26,14 @@ export const MapboxMap = () => {
       id: "customRoutePreview",
     });
 
-  const cancelCustomRoute = () => {
+  const cancelCustomRoute = (showToast = true) => {
     setCustomRouteStart(false);
     setCustomRouteEnd(false);
-    toast.error("Cancelled custom route creation", {
-      position: "top-left",
-    });
+    if (showToast) {
+      toast.error("Cancelled custom route creation", {
+        position: "top-left",
+      });
+    }
   };
 
   const createCustomRoute = () => {
@@ -64,15 +67,20 @@ export const MapboxMap = () => {
 
   const handleMouseClick = useCallback(
     (event: mapboxgl.MapLayerMouseEvent) => {
-      if (
-        event.originalEvent.target !== mainMap?.getCanvas() ||
-        customRouteStart
-      ) {
+      if (event.originalEvent.target !== mainMap?.getCanvas()) {
         return;
       }
+      if (customRouteStart && customRouteEnd) {
+        setCustomRoute([customRouteStart, customRouteEnd]);
+        cancelCustomRoute(false);
+        toast.success("created route!");
+        toast.dismiss("processToast");
+        return;
+      }
+
       setShowPopup(event.lngLat);
     },
-    [customRouteStart, mainMap]
+    [customRouteEnd, customRouteStart, mainMap]
   );
 
   const handleMouseMove = useCallback(
