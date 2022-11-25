@@ -9,6 +9,7 @@ import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { Actionbar } from "../../Actionbar";
 import { Popup } from "../Popup";
+import { CustomRoute } from "../CustomRoute";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
@@ -17,7 +18,9 @@ export const MapboxMap = () => {
     false
   );
   const [customRouteEnd, setCustomRouteEnd] = useState<LngLat | false>(false);
-  const [customRoute, setCustomRoute] = useState<LngLat[] | false>(false);
+  const [customRoute, setCustomRoute] = useState<[LngLat, LngLat] | false>(
+    false
+  );
 
   const customRoutePreview =
     customRouteEnd &&
@@ -134,7 +137,7 @@ export const MapboxMap = () => {
       {customRoutePreview && (
         <Source type="geojson" data={customRoutePreview}>
           <Layer
-            id="route"
+            id="custom-route"
             type="line"
             layout={{ "line-join": "round", "line-cap": "round" }}
             paint={{
@@ -144,57 +147,7 @@ export const MapboxMap = () => {
           />
         </Source>
       )}
-      {/* !!route && (
-        <>
-          <Source id="route" type="geojson" data={route}>
-            <Layer
-              id="route"
-              type="line"
-              layout={{ "line-join": "round", "line-cap": "round" }}
-              paint={{
-                "line-color": "#FFF",
-                "line-width": 5,
-              }}
-            />
-          </Source>
-          <Marker
-            latitude={route.coordinates?.[0]?.[1]}
-            longitude={route.coordinates?.[0]?.[0]}
-            anchor="bottom"
-          >
-            <MdPersonPinCircle className="text-3xl text-white" />
-          </Marker>
-          <Marker
-            longitude={route.coordinates?.at(-1)?.[0]}
-            latitude={route.coordinates?.at(-1)?.[1]}
-            anchor="bottom-left"
-          >
-            <MdFlag className="text-3xl text-white" />
-          </Marker>
-          <Marker
-            latitude={route.coordinates?.at(route.coordinates.length / 2)?.[1]}
-            longitude={route.coordinates?.at(route.coordinates.length / 2)?.[0]}
-            anchor="center"
-            rotation={calcBearing({
-              start: [
-                route.coordinates?.at(route.coordinates.length / 2 - 1)?.[1] ??
-                  0,
-                route.coordinates?.at(route.coordinates.length / 2 - 1)?.[0] ??
-                  0,
-              ],
-              destination: [
-                route.coordinates?.at(route.coordinates.length / 2)?.[1] ?? 0,
-                route.coordinates?.at(route.coordinates.length / 2)?.[0] ?? 0,
-              ],
-            })}
-          >
-            <div className="relative">
-              <TiLocationArrow className="absolute inset-0 m-auto -rotate-45 text-2xl text-slate-100" />
-              <FaCircle className="text-3xl text-slate-500" />
-            </div>
-          </Marker>
-        </>
-      ) */}
+      {customRoute && <CustomRoute coordinates={customRoute} />}
     </Map>
   );
 };
