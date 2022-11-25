@@ -30,8 +30,7 @@ export const CustomRoute = ({
   const route =
     !!data?.routes[0]?.geometry && toGeoJSON(data.routes[0].geometry);
 
-  // TODO: check how to early return in jsx without using null;
-  if (!route) return <div />;
+  if (!route) return <></>;
   return (
     <>
       <Source id="route" type="geojson" data={route}>
