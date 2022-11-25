@@ -13,7 +13,7 @@ import { CustomRoute } from "../CustomRoute";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
-  // FIXME: use undefined instead of false for states
+  // TODO: use undefined instead of false for states
   const [showPopup, setShowPopup] = useState<LngLat | false>(false);
   const [customRouteStart, setCustomRouteStart] = useState<LngLat | false>(
     false
