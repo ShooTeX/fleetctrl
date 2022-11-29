@@ -47,6 +47,7 @@ export const MapboxMap = () => {
     setShowPopup(false);
 
     toast.custom(
+      // TODO: animate action bar
       (t) => (
         <Actionbar
           Icon={FaFlag}
