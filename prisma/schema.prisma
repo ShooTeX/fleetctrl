@@ -1,17 +1,39 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Passenger {
+  id          String                @id @default(cuid())
+  name        String
+  origin      Unsupported("point")?
+  destination Unsupported("point")?
+  route       Route?                @relation(fields: [routeId], references: [id])
+  routeId     String?
+}
+
+model Route {
+  id         String                 @id @default(cuid())
+  waypoints  Unsupported("point")[]
+  passengers Passenger[]
+  vehicle    Vehicle?
+}
+
+model Driver {
+  id      String   @id @default(cuid())
+  name    String
+  Vehicle Vehicle?
+}
+
+model Vehicle {
+  id       String  @id @default(cuid())
+  charge   Float   @default(0.0)
+  route    Route?  @relation(fields: [routeId], references: [id])
+  routeId  String? @unique
+  driver   Driver? @relation(fields: [driverId], references: [id])
+  driverId String? @unique
 }
