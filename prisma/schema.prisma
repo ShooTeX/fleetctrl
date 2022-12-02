@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
 }
 
 model Passenger {
@@ -12,13 +14,13 @@ model Passenger {
   name        String
   origin      Unsupported("point")?
   destination Unsupported("point")?
-  route       Route?                @relation(fields: [routeId], references: [id])
   routeId     String?
+  route       Route?                @relation(fields: [routeId], references: [id])
 }
 
 model Route {
-  id         String                 @id @default(cuid())
-  waypoints  Unsupported("point")[]
+  id         String                    @id @default(cuid())
+  linestring Unsupported("linestring")
   passengers Passenger[]
   vehicle    Vehicle?
 }
@@ -32,8 +34,16 @@ model Driver {
 model Vehicle {
   id       String  @id @default(cuid())
   charge   Float   @default(0.0)
-  route    Route?  @relation(fields: [routeId], references: [id])
   routeId  String? @unique
-  driver   Driver? @relation(fields: [driverId], references: [id])
   driverId String? @unique
+  driver   Driver? @relation(fields: [driverId], references: [id])
+  route    Route?  @relation(fields: [routeId], references: [id])
+}
+
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
 }
