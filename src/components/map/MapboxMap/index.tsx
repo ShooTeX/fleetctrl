@@ -5,11 +5,12 @@ import { FaFlag, FaRoute } from "react-icons/fa";
 import type { LngLat } from "react-map-gl";
 import Map, { Layer, Source, useMap } from "react-map-gl";
 import { lineString } from "@turf/helpers";
+import { faker } from "@faker-js/faker";
 import { hhBounds } from "../../../map/hh-bounds";
 import { hhFeature } from "../../../map/hh-feature";
 import { Actionbar } from "../../Actionbar";
 import { Popup } from "../Popup";
-import { CustomRoute } from "../CustomRoute";
+import { trpc } from "../../../utils/trpc";
 
 export const MapboxMap = () => {
   const { mainMap } = useMap();
@@ -22,6 +23,15 @@ export const MapboxMap = () => {
   const [customRoute, setCustomRoute] = useState<[LngLat, LngLat] | false>(
     false
   );
+  const createPassenger = trpc.passenger.create.useMutation();
+
+  if (createPassenger.error) {
+    console.log(createPassenger.error);
+  }
+
+  if (createPassenger.data) {
+    console.log(createPassenger.data);
+  }
 
   const customRoutePreview =
     customRouteEnd &&
@@ -77,6 +87,11 @@ export const MapboxMap = () => {
       }
       if (customRouteStart && customRouteEnd) {
         setCustomRoute([customRouteStart, customRouteEnd]);
+        createPassenger.mutate({
+          name: faker.name.fullName(),
+          origin: [customRouteStart.lng, customRouteStart.lat],
+          destination: [customRouteEnd.lng, customRouteEnd.lat],
+        });
         cancelCustomRoute(false);
         toast.success("created route!");
         toast.dismiss("processToast");
@@ -85,7 +100,7 @@ export const MapboxMap = () => {
 
       setShowPopup(event.lngLat);
     },
-    [customRouteEnd, customRouteStart, mainMap]
+    [customRouteEnd, customRouteStart, mainMap, createPassenger]
   );
 
   const handleMouseMove = useCallback(
@@ -149,7 +164,7 @@ export const MapboxMap = () => {
           />
         </Source>
       )}
-      {customRoute && <CustomRoute coordinates={customRoute} />}
+      {/* customRoute && <CustomRoute coordinates={customRoute} /> */}
     </Map>
   );
 };
